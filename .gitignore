@@ -1,0 +1,12 @@
+ /Backend/.idea/.
+/Backend/Backend.iml
+__pycache__/
+/Backend/.env
+
+ /Backend - Billing Automation/.idea/.
+/Backend - Billing Automation/Backend.iml
+__pycache__/
+/Backend - Billing Automation/.env
+/Backend - Billing Automation/celerybeat-schedule.bak
+/Backend - Billing Automation/celerybeat-schedule.dat
+/Backend - Billing Automation/celerybeat-schedule.dir

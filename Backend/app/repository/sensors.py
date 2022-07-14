@@ -30,7 +30,7 @@ def destroy(id: int, db: Session):
                             detail=f"Sensor with id {id} not found")
     sensor.delete(synchronize_session=False)
     db.commit()
-    return{"success": f"Sensor with the name {sensor.id} Deleted"}
+    return{"success": f"Sensor with the name {id} Deleted"}
 
 
 def update(id: int, request: schemas.ShowSensor, db: Session):

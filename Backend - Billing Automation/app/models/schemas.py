@@ -4,9 +4,9 @@ from pydantic import BaseModel
 from datetime import  datetime
 
 class CreateSensorReadings(BaseModel):
-    sensorId: int
-    waterFlowRate: float
-    volume: float
+    sensorId: str
+    waterFlowRate: str
+    volume: str
     
     class Config():
         orm_mode = True

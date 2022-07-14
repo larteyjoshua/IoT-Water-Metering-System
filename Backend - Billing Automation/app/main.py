@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from app.utils import database
 from fastapi_utils.tasks import repeat_every
 import logging
+import socket 
+from fastapi.middleware.trustedhost import TrustedHostMiddleware 
 #models.Base.metadata.create_all(bind=engine)
 
 description = """
@@ -36,9 +38,11 @@ origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+)
+app.add_middleware(
+    TrustedHostMiddleware, allowed_hosts=["*"] 
 )
 get_db = database.get_db
 
@@ -55,9 +59,16 @@ def info(request: Request):
     hostPort = request.client.port
     hostName = request.client.host
     url = request.url._url
-    return { "hostName": hostName, "port": hostPort, "url": url }
-    
+    hostname = socket.gethostname()    
+    IPAddr = socket.gethostbyname(hostname) 
+    return { "hostName": hostName, "port": hostPort, "url": url, "ip": IPAddr}
 
-@app.post('/sensor/addreading')
+
+
+@app.post('/sensor/update-sensor')
 async def create_reading(request: schemas.CreateSensorReadings, db: Session = Depends(database.get_db)):
     return sensorReadings.create(request, db)
+
+#celery -A app.celeryJobs.celeryWorker beat --loglevel=info
+#celery -A app.celeryJobs.celeryWorker worker -l info -P eventlet
+#docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management

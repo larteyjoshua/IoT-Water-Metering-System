@@ -24,7 +24,7 @@ def destroy(id: int, db: Session):
     db.commit()
     return  {"success": f"Cost Deleted"}
 
-def show_by_user(id: int, db: Session):
+def show_by_user(id: int, db: Session): 
     costs = db.query(model.Cost).filter(model.Cost.sensorId == id).all()
     if not costs:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

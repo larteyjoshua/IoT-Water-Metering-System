@@ -62,7 +62,6 @@ def update(id: int, request: schemas.ShowUser, db: Session):
     user.homeGPSAddress = request.homeGPSAddress
     user.landMark = request.landMark
     user.houseNo = request.houseNo
-    user.password = Hash.bcrypt(request.password)
     user.sensorId =  request.sensorId
     user.isActive = request.isActive
     db.commit()
